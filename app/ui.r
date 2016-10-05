@@ -12,7 +12,7 @@ navbarPage(title = 'NY', theme = 'bootstrap.css',
            
               fluidRow(
                 
-                column(6,
+                column(4,
                        
                        dateInput('s_date', label = 'Start Date', value = '2010-01-01',
                                 min = '2010-01-01', max = '2016-01-01'
@@ -26,13 +26,22 @@ navbarPage(title = 'NY', theme = 'bootstrap.css',
                 ),
                
            
-                column(6,
+                column(4,
                        
                        checkboxGroupInput('check_item', label = 'Choose item to display',
                                           choices =  list(1,2,3,4)
                           )
                 
-                )   
+                ),
+                
+                column(4,
+                       verticalLayout(
+                       
+                          actionButton('detail_plot', label = 'Show it all!'),
+                       
+                          actionButton('dist_plot', label = 'Show me the distribution!')
+                       )
+                       )
               )
   
   ),
