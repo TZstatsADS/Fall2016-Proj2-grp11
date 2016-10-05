@@ -15,9 +15,26 @@ shinyServer(function(input, output, session) {
           ) %>%
           setView(lng = -73.958, lat = 40.801453, zoom = 12)
       })
-  
+    
+    #user click 'show it all', reveal the popups for every felony on the map
+    eventReactive(input$detailed_plot,{
+    #code here adding the popups    := Max           
+                  
+                  })
     
     
+    
+    #user click 'Show me the distribution!', reveal the felony counts for certain area 
+    #during the user specified time period
+    #maybe darker color for areas with more crime? up to you!
+    eventReactive(input$dist_plot,{
+      #code here adding the area polygon := hayoung           
+      #you can manipulate the dataset from global.R here
+      #shinyapp tutorial:http://shiny.rstudio.com/tutorial
+      #guide to leaflet: https://rstudio.github.io/leaflet/
+    })
+    
+
     
 })
 
