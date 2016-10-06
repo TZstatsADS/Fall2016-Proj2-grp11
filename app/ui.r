@@ -1,40 +1,120 @@
 library(shiny)
+library(shinydashboard)
 
-# Define UI for application that draws a histogram
-shinyUI(fluidPage(
+#UI part
+navbarPage(title = 'NY', theme = 'bootstrap.css',
+           
+  tabPanel(title = 'Map Vaisualization',
+             
+              leafletOutput('map'), 
+           
+              hr(),
+           
+              fluidRow(
+                
+                column(4,
+                       
+                       dateInput('s_date', label = 'Start Date', value = '2010-01-01',
+                                min = '2010-01-01', max = '2016-01-01'
+                                ),
+                        
+                        
+                        dateInput('e_date', label = 'End Date', value = '2010-01-01',
+                                  min = '2010-01-01', max = '2016-01-01'
+                        )
+                
+                ),
+               
+           
+                column(4,
+                       
+                       checkboxGroupInput('check_item', label = 'Choose item to display',
+                                          choices =  list(1,2,3,4)
+                          )
+                
+                ),
+                
+                column(4,
+                       verticalLayout(
+                       
+                          actionButton('detail_plot', label = 'Show it all!'),
+                       
+                          actionButton('dist_plot', label = 'Show me the distribution!')
+                       )
+                       )
+              )
   
-  # Application title
-  titlePanel("2009 Manhattan Housing Sales"),
+  ),
   
-  # Sidebar with a selector input for neighborhood
-  sidebarLayout(
-    sidebarPanel(
-      selectInput("nbhd", label = h5("Choose a Manhattan Neighborhood"), 
-                         choices = list("all neighborhoods"=0,
-                                        "Central Harlem"=1, 
-                                        "Chelsea and Clinton"=2,
-                                        "East Harlem"=3, 
-                                        "Gramercy Park and Murray Hill"=4,
-                                        "Greenwich Village and Soho"=5, 
-                                        "Lower Manhattan"=6,
-                                        "Lower East Side"=7, 
-                                        "Upper East Side"=8, 
-                                        "Upper West Side"=9,
-                                        "Inwood and Washington Heights"=10), 
-                         selected = 0)
-      #sliderInput("p.range", label=h3("Price Range (in thousands of dollars)"),
-      #            min = 0, max = 20000, value = c(200, 10000))
-    ),
-    # Show two panels
-    mainPanel(
-      #h4(textOutput("text")),
-      h3(code(textOutput("text1"))),
-      tabsetPanel(
-        # Panel 1 has three summary plots of sales. 
-        tabPanel("Sales summary", plotOutput("distPlot")), 
-        # Panel 2 has a map display of sales' distribution
-        tabPanel("Sales map", plotOutput("distPlot1")))
+  tabPanel(title ='Analysis',
+           navlistPanel(
+             
+             tabPanel(title = 'By year',
+                      fluidRow(
+                        h2('place for plotting output')
+                      ),
+                      #dividing line
+                      hr(),
+                      #input area
+                      fluidRow(
+                        column(4,
+                               selectInput('4',
+                                           label = 'Input value here',
+                                           choices = c(1,2,3,4),
+                                           selected = 3)
+                        ),
+                        
+                        column(4,
+                               selectInput('5',
+                                           label = 'Input value here',
+                                           choices = c(1,2,3,4),
+                                           selected = 3)
+                        ),
+                        
+                        column(4,
+                               selectInput('6',
+                                           label = 'Input value here',
+                                           choices = c(1,2,3,4),
+                                           selected = 3)
+                        )
+                        
+                      )
+             ),
+             
+             tabPanel(title = 'By felony type',
+                      fluidRow(
+                        h2('place for plotting output')
+                      ),
+                      #dividing line
+                      hr(),
+                      #input area
+                      fluidRow(
+                        column(4,
+                               selectInput('7',
+                                           label = 'Input value here',
+                                           choices = c(1,2,3,4),
+                                           selected = 3)
+                        ),
+                        
+                        column(4,
+                               selectInput('8',
+                                           label = 'Input value here',
+                                           choices = c(1,2,3,4),
+                                           selected = 3)
+                        ),
+                        
+                        column(4,
+                               selectInput('9',
+                                           label = 'Input value here',
+                                           choices = c(1,2,3,4),
+                                           selected = 3)
+                        )
+                      
+                        )
+             
+           )
+           
+
     )
- )
-))
-
+  )
+)
