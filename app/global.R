@@ -9,9 +9,8 @@ dt = as.data.frame(fread('./data/NYPD_Felony_2010~2016.csv'))
 #colSums(is.na(dt))
   
 #Split location column for mapping
-dt = dt %>% mutate(lng = substr(dt$`Location 1`, 2, regexpr(',', dt$`Location 1`) - 1)) %>%
-  mutate(lat = substr(dt$`Location 1`,regexpr(',', dt$`Location 1`) + 2, nchar(dt$`Location 1`)-1) ) %>%
-  select(-`Location 1`)
+dt = dt %>% mutate(lat = substr(dt$`Location 1`, 2, regexpr(',', dt$`Location 1`) - 1)) %>%
+  mutate(lng = substr(dt$`Location 1`,regexpr(',', dt$`Location 1`) + 2, nchar(dt$`Location 1`)-1) ) 
 
 #express month in number
 dt$`Occurrence Month` = as.numeric(mapvalues(dt$`Occurrence Month`,  
@@ -22,6 +21,4 @@ dt$`Occurrence Month` = as.numeric(mapvalues(dt$`Occurrence Month`,
 dt = mutate(dt, Date = as.Date(paste(sep = '-', dt$`Occurrence Year`, dt$`Occurrence Month`, dt$`Occurrence Day`)))
 
 #save(dt, file =  './data/dt.RData')
-load('./data/dt.RData')
-
-
+#load('./data/dt.RData')

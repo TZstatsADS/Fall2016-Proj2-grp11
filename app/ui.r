@@ -1,5 +1,6 @@
 library(shiny)
 library(shinydashboard)
+library(leaflet)
 
 #UI part
 navbarPage(title = 'NY', theme = 'bootstrap.css',
@@ -21,8 +22,11 @@ navbarPage(title = 'NY', theme = 'bootstrap.css',
                         
                         dateInput('e_date', label = 'End Date', value = '2010-01-01',
                                   min = '2010-01-01', max = '2016-01-01'
-                        )
-                
+                                 ),
+                       
+                       textInput('hour', label = 'Time period (from 0 to 23)', placeholder = 'ex. 2 ~ 4')
+                        
+                        
                 ),
                
            
@@ -40,6 +44,7 @@ navbarPage(title = 'NY', theme = 'bootstrap.css',
                           actionButton('detail_plot', label = 'Show it all!'),
                        
                           actionButton('dist_plot', label = 'Show me the distribution!')
+                          
                        )
                        )
               )
