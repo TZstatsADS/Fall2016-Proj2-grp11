@@ -16,6 +16,7 @@ shinyServer(function(input, output, session) {
           setView(lng = -73.958, lat = 40.801453, zoom = 12)
       })
     
+   
     #user click 'show it all', reveal the popups for every felony on the map
     eventReactive(input$detailed_plot,{
     #code here adding the popups    := Max           
