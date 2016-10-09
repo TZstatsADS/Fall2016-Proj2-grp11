@@ -33,31 +33,21 @@ shinyServer(function(input, output, session) {
             }
             
             #filter data for the user specified period
-            detail_plot_dt =  dt %>% 
-                filter(Date >= input$s_date & Date <= input$e_date) %>%
-                filter(`Occurrence Hour`>= start_hour & `Occurrence Hour` <= end_hour)
+            detail_plot_dt = map_data_prep(start_hour =  start_hour, end_hour = end_hour, 
+                                           start_date =  input$s_date, end_date = input$e_date, 
+                                           crime_type =  input$crime_list, n_obs = input$n_obs)
+            
             
             #test
             leafletProxy('map', data = detail_plot_dt) %>%
-                clearShapes() %>%
-                addMarkers(lng =  -73.989282176, lat = 40.7504307680001)
-                  
+                clearMarkers() %>%
+                addMarkers(lng = ~lng, lat = ~lat, icon = ~crime_icons[Offense],  
+                                                                popup = paste('# of', '<em>',detail_plot_dt$Offense,'</em>',':',
+                                                                '<strong>', detail_plot_dt$n, '</strong>'))
+                
+          
                   })
     
-    
-    #output$test = renderText(input$s_date > as.Date('2011-01-02'))
-    
-    #user click 'Show me the distribution!', reveal the felony counts for certain area 
-    #during the user specified time period
-    #maybe darker color for areas with more crime? up to you!
-    eventReactive(input$dist_plot,{
-      #code here adding the area polygon := hayoung           
-      #you can manipulate the dataset from global.R here
-      #shinyapp tutorial:http://shiny.rstudio.com/tutorial
-      #guide to leaflet: https://rstudio.github.io/leaflet/
-    })
-    
-
     
 })
 
