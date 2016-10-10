@@ -49,6 +49,26 @@ shinyServer(function(input, output, session) {
                   })
     
     
+    #---------------hayoung-----------
+    my_address <- eventReactive(input$go,{input$address})
+    output$map_output <- renderLeaflet({map})
+    
+    observe({
+      code<-geocode(my_address())
+      dt_sub<-dt[1:200,c('lng','lat')]
+      newdata<- subset(dt[1:200,],distHaversine(code,dt_sub) <= input$range)
+      output$table <- DT::renderDataTable(newdata[,c(2,3,7,8)])
+      
+      leafletProxy("map_output") %>%
+        clearPopups()%>%
+        clearGroup("newdata")%>%
+        setView(code$lon,code$lat,zoom=13)%>%
+        addPopups(code$lon,code$lat,"My Location", 
+                  options=popupOptions(closeButton=TRUE))%>%
+        addCircles(code$lon,code$lat,radius=input$range,color="blue",group="newdata")
+    })
+    
+    
 })
 
 

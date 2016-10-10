@@ -2,6 +2,9 @@ library(dplyr)
 library(plyr)
 library(data.table)
 library(magrittr)
+library(leaflet)
+library(ggmap)
+library(geosphere)
 
 setwd('/Users/Max/GitHub/Fall2016-Proj2-grp11/')
 dt = as.data.frame(fread('./data/NYPD_Felony_2010~2016.csv'))
@@ -59,3 +62,11 @@ crime_icons = iconList(
     RAPE =  makeIcon(iconUrl = './data/RAPE.png',iconWidth = 23, iconHeight = 23),
     ROBBERY =  makeIcon(iconUrl = './data/ROBBERY.png',iconWidth = 23, iconHeight = 23)
 )
+
+#------------hayoung-----------------
+dt = cbind(dt, split_location(dt$`Location 1`))
+dt[,'lat']<-as.numeric(dt[,'lat'])
+dt[,'lng']<-as.numeric(dt[,'lng'])
+pu<-paste(sep="<br/>",dt[1:200,]$Offense,dt[1:200,]$'Occurrence Date')
+map<-leaflet(dt[1:200,]) %>% addTiles() %>%
+  addMarkers(dt[1:200,]$lng, dt[1:200,]$lat, popup = pu,clusterOptions=markerClusterOptions())
