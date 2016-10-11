@@ -67,6 +67,6 @@ crime_icons = iconList(
 dt = cbind(dt, split_location(dt$`Location 1`))
 dt[,'lat']<-as.numeric(dt[,'lat'])
 dt[,'lng']<-as.numeric(dt[,'lng'])
-pu<-paste(sep="<br/>",dt[1:200,]$Offense,dt[1:200,]$'Occurrence Date')
-map<-leaflet(dt[1:200,]) %>% addTiles() %>%
-  addMarkers(dt[1:200,]$lng, dt[1:200,]$lat, popup = pu,clusterOptions=markerClusterOptions())
+pu<-paste(sep="<br/>",dt$Offense,dt$'Occurrence Date')
+map<-leaflet(dt) %>% addTiles() %>%
+  addMarkers(dt$lng, dt$lat, popup = pu,clusterOptions=markerClusterOptions())
