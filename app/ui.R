@@ -67,10 +67,7 @@ navbarPage(title = 'NY', theme = 'bootstrap.css',
                           
                           sliderInput('n_obs', '# of incidents on map', min = 1, max = 200, step = 1, value = 50),
                          
-                          actionButton('detail_plot', label = 'Show it all!'),
-                       
-                          actionButton('dist_plot', label = 'Show me the distribution!')
-                          
+                          actionButton('detail_plot', label = 'Show it all!')
                           
                           
                        )
