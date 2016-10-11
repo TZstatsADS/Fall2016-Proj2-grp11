@@ -55,9 +55,9 @@ shinyServer(function(input, output, session) {
     
     observe({
       code<-geocode(my_address())
-      dt_sub<-dt[1:200,c('lng','lat')]
-      newdata<- subset(dt[1:200,],distHaversine(code,dt_sub) <= input$range)
-      output$table <- DT::renderDataTable(newdata[,c(2,3,7,8)])
+      dt_sub<-dt[,c('lng','lat')]
+      newdata<- subset(dt,distHaversine(code,dt_sub) <= input$range)
+      output$table <- DT::renderDataTable(newdata[,c('Date','Day of Week','Occurrence Hour','Offense')])
       
       leafletProxy("map_output") %>%
         clearPopups()%>%
