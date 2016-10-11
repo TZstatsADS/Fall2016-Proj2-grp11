@@ -58,7 +58,7 @@ shinyServer(function(input, output, session) {
       dt_sub<-dt[,c('lng','lat')]
       newdata<- subset(dt,distHaversine(code,dt_sub) <= input$range)
       output$table <- DT::renderDataTable(newdata[,c('Date','Day of Week','Occurrence Hour','Offense')])
-      
+
       leafletProxy("map_output") %>%
         clearPopups()%>%
         clearGroup("newdata")%>%
@@ -70,6 +70,3 @@ shinyServer(function(input, output, session) {
     
     
 })
-
-
-
