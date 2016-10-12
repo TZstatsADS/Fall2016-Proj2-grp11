@@ -4,7 +4,14 @@ library(leaflet)
 
 #UI part
 navbarPage(title = 'NY', theme = 'bootstrap.css',
-  
+ 
+  tabPanel(title = 'Columbia Univ. Area',
+            fluidRow(
+                                column(width = 9,
+                                       box(width = NULL, solidHeader = TRUE,leafletOutput("map_output2", height = 500)
+                                       )
+                                       
+                                ),
   tabPanel(title = 'Neighborhood Crime',
                     fluidRow(
                       column(width = 9,
