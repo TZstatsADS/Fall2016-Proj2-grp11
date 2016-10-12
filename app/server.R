@@ -6,7 +6,7 @@ library(ggplot2)
 library(DT)
 library(highcharter)
 library(data.table)
-
+library(ggmap)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
