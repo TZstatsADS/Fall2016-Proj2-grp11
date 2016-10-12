@@ -6,7 +6,13 @@ library(shinythemes)
 
 #UI part
 navbarPage(title = "NYPD 7 Major Felonies", theme = shinytheme("spacelab"),
-  
+           
+           
+           
+   tabPanel(title = 'Welcome',br(),br(),br(),br(),br(),
+                    h1("For your wellbeing",align="center"),br(),br(),br(),br(),br(),
+                    h2("Rember this: 911",align="center")),
+                    
   
   tabPanel(title = 'Neighborhood Crime',
                     fluidRow(
