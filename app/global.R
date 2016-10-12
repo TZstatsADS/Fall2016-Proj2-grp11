@@ -70,3 +70,6 @@ dt[,'lng']<-as.numeric(dt[,'lng'])
 pu<-paste(sep="<br/>",dt$Offense,dt$'Occurrence Date')
 map<-leaflet(dt) %>% addTiles() %>%
   addMarkers(dt$lng, dt$lat, popup = pu,clusterOptions=markerClusterOptions())
+
+sub1<-subset(dt,(lon>-73.97)&(lon<-73.94))
+sub2<-subset(sub1,(lat>40.80)&(lat<40.81))
