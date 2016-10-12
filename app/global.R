@@ -18,6 +18,7 @@ dt$`Occurrence Month` = as.numeric(mapvalues(dt$`Occurrence Month`,
                                   from = unique(dt$`Occurrence Month`),
                                   to = c(10,9,12,1,2,3,4,5,6,7,8,11)))
 
+
 #add another date column for map plotting
 dt = mutate(dt, Date = as.Date(paste(sep = '-', dt$`Occurrence Year`, dt$`Occurrence Month`, dt$`Occurrence Day`)))
 #save(dt, file =  './data/dt.RData')
@@ -74,22 +75,4 @@ map<-leaflet(dt) %>% addTiles() %>%
 
 sub1<-subset(dt,(lng>-73.97)&(lng<-73.94))
 sub2<-subset(sub1,(lat>40.80)&(lat<40.81))
-
-#--------Celia----------------------
-df.Year= dt %>% group_by(Offense,`Occurrence Year`) %>% dplyr::summarise (n = n()) 
-df.Month= dt %>% group_by(Offense,`Occurrence Month`) %>% dplyr::summarise (n = n()) 
-df.Day= dt %>% group_by(Offense,`Occurrence Day`) %>% dplyr::summarise (n = n()) 
-df.Week= dt %>% group_by(Offense,`Day of Week`) %>% dplyr::summarise (n = n())
-df.Hour= dt %>% group_by(Offense,`Occurrence Hour`) %>% dplyr::summarise (n = n()) 
-
-# crime types
-df.crime= dplyr::count(dt,Offense)
-
-# List of Vectors
-crimes_vec=df.crime$Offense
-
-year_list=seq(from=2010,to=2015)
-month_list=c('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec')
-day_list=seq(1:31)
-hour_list=seq(from=0,to=23)
 
