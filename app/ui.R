@@ -6,13 +6,12 @@ library(shinythemes)
 
 #UI part
 navbarPage(title = "NYPD 7 Major Felonies", theme = shinytheme("spacelab"),
-           
-           
-           
-   tabPanel(title = 'Welcome',br(),br(),br(),br(),br(),
+  
+  tabPanel(title = 'Welcome',br(),br(),br(),br(),br(),
                     h1("For your wellbeing",align="center"),br(),br(),br(),br(),br(),
-                    h2("Rember this: 911",align="center")),
-                    
+                    div(img(src="new-york-scene.jpg", height = 600, width = 800, align = 'center'), style="text-align: center;"),
+                    #img(src="new-york-scene.jpg", height = 600, width = 800, align = 'center'),
+                    h2("Remember this: 911",align="center")),
   
   tabPanel(title = 'Neighborhood Crime',
                     fluidRow(
@@ -183,16 +182,16 @@ navbarPage(title = "NYPD 7 Major Felonies", theme = shinytheme("spacelab"),
              
              
              tabPanel("The Dataset",
-                                p("The dataset is imported from https://nycopendata.socrata.com/"),
-                               br(),br(),
-                               p("We will not display the raw data here as its size is enormous even after the data cleaning.")),
-                      
-                      
-                      tabPanel("Contact Us",
-                               p("shinyapp address: not yet available."),
-                               br(),
-                               p("Email Address: celiahuangofficial@gmail.com") ),
-                      
+                      p("The dataset is imported from https://nycopendata.socrata.com/"),
+                      br(),br(),
+                      p("We will not display the raw data here as its size is enormous even after the data cleaning.")),
+             
+             
+             tabPanel("Contact Us",
+                      p("shinyapp address: not yet available."),
+                      br(),
+                      p("Email Address: celiahuangofficial@gmail.com") ),
+             
              
              "About the Team",
              tabPanel("Chenxi(Celia) Huang",
@@ -205,7 +204,7 @@ navbarPage(title = "NYPD 7 Major Felonies", theme = shinytheme("spacelab"),
                         p("Interests: music, painting, data visualization, Cooking, Travel, etc."),
                         br(),
                         img(src="Celia_Huang.png", height = 100, width = 100)
-                        
+
                         
                       )
              ),
