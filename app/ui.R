@@ -205,9 +205,10 @@ navbarPage(title = "NYPD 7 Major Felonies", theme = 'bootstrap.css',
                       br(),
                       p("Powerlifting enthusiastics. Big fan of cycling and ASAP Rocky.")),
              tabPanel("Hayoung Kim",
-                      p(),
+                      p('Columbia University, M.A. in statistics'),
                       br(),
-                      p())))
+                      p('NICE Research and Consulting, Senior Research Consaltant at CS Department for 3 years
+Sookmyung Women\'s University, B.S. in statistics'))))
   
   
             
