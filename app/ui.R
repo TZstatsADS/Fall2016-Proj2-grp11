@@ -176,8 +176,17 @@ navbarPage(title = "NYPD 7 Major Felonies", theme = shinytheme("spacelab"),
                         style = "font-family: 'times'; font-si16pt")),
              
              
-             tabPanel("The Dataset"),
-             tabPanel("Contact Us"),
+             tabPanel("The Dataset",
+                                p("The dataset is imported from https://nycopendata.socrata.com/"),
+                               br(),br(),
+                               p("We will not display the raw data here as its size is enormous even after the data cleaning.")),
+                      
+                      
+                      tabPanel("Contact Us",
+                               p("shinyapp address: not yet available."),
+                               br(),
+                               p("Email Address: celiahuangofficial@gmail.com") ),
+                      
              
              "About the Team",
              tabPanel("Chenxi(Celia) Huang",
