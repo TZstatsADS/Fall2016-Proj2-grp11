@@ -102,11 +102,11 @@ shinyServer(function(input, output, session) {
       df.bor3= dt[which(dt[,9]==  input$BorGroup[3]),]
       df.bor4= dt[which(dt[,9]==  input$BorGroup[4]),]
       df.bor5= dt[which(dt[,9]==  input$BorGroup[5]),]
-      df.bor_fel1= count(df.bor1,Offense)
-      df.bor_fel2= count(df.bor2,Offense)
-      df.bor_fel3= count(df.bor3,Offense)
-      df.bor_fel4= count(df.bor4,Offense)
-      df.bor_fel5= count(df.bor5,Offense)
+      df.bor_fel1= dplyr::count(df.bor1,Offense)
+      df.bor_fel2= dplyr::count(df.bor2,Offense)
+      df.bor_fel3= dplyr::count(df.bor3,Offense)
+      df.bor_fel4= dplyr::count(df.bor4,Offense)
+      df.bor_fel5= dplyr::count(df.bor5,Offense)
       
       if(length(input$BorGroup==1)){
         highchart() %>% hc_chart(type = "bar") %>% hc_chart(width=1200,height=800) %>% hc_title(text = "Crime Counts in Different Boroughs") %>%
@@ -143,7 +143,7 @@ shinyServer(function(input, output, session) {
     
     
     output$tableplot = renderDataTable({
-      df_prec=count(dt,Precinct)
+      df_prec=dplyr::count(dt,Precinct)
       df_prec.order=df_prec[order(-df_prec$n),]
       m=input$precinct[1]
       n=input$precinct[2]
@@ -153,7 +153,7 @@ shinyServer(function(input, output, session) {
     #########################by crime types#############################
     output$typeplot = renderHighchart({
       # crime types
-      df.crime= count(dt,Offense)
+      df.crime= dplyr::count(dt,Offense)
       df.crime.2010_2015=dt %>% group_by(`Borough`,Offense) %>% summarise (n = n())
       
       if(input$year=="2010-2015" & input$typeborough=="ALL BOROUGHS"){
