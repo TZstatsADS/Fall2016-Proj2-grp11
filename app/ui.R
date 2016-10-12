@@ -5,7 +5,7 @@ library(plotly)
 library(shinythemes)
 
 #UI part
-navbarPage(title = "NYPD 7 Major Felonies", theme = 'bootstrap.css',theme = shinytheme("spacelab"),
+navbarPage(title = "NYPD 7 Major Felonies", theme = shinytheme("spacelab"),
   
   
   tabPanel(title = 'Neighborhood Crime',
