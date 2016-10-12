@@ -3,15 +3,16 @@
 
 Term: Fall 2016
 
-+ Team #
-+ Projec title: Lorem ipsum dolor sit amet
++ Group 11
++ Projec title: 7 Major Felony in New York City
 + Team members
 	+ Chenxi Huang
 	+ Hayoung Kim
 	+ Zhehao Liu
+
+All the team members have pledged that they all put effort and work for this project.
 	
-	
-+ Project summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
++ Project summary: In this project, we explore the major felony data, aiming to provide information about crime throughout New York City.
 
 In this second project of Applied Data Science, we carried out *Exploratory Data Analysis and Visualization* via a shiny app on a topic about open data released from the [New York City open data portal](https://nycopendata.socrata.com/). See [Project 2 Description](doc/project2_desc.md) for more details.  
 
