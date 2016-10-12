@@ -5,7 +5,7 @@ library(RColorBrewer)
 library(ggplot2)
 library(DT)
 library(highcharter)
-
+library(data.table)
 
 ######################################data processing#########################################
 # read the data
