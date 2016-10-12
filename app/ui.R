@@ -2,9 +2,10 @@ library(shiny)
 library(shinydashboard)
 library(leaflet)
 library(plotly)
+library(shinythemes)
 
 #UI part
-navbarPage(title = "NYPD 7 Major Felonies", theme = 'bootstrap.css',
+navbarPage(title = "NYPD 7 Major Felonies", theme = 'bootstrap.css',theme = shinytheme("spacelab"),
   
   
   tabPanel(title = 'Neighborhood Crime',
