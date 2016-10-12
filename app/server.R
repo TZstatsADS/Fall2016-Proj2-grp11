@@ -68,5 +68,12 @@ shinyServer(function(input, output, session) {
         addCircles(code$lon,code$lat,radius=input$range,color="blue",group="newdata")
     })
     
-    
+    sliderValues <- reactive({
+    leaflet(subset(sub2,`Occurrence Hour`%in% input$test)) %>% addTiles() %>%
+    setView(-73.9626, 40.8075, zoom = 16)%>%
+    addMarkers(subset(sub2,`Occurrence Hour`%in% input$test)$lon, subset(sub2,`Occurrence Hour`%in% input$test)$lat, popup = pu,clusterOptions=markerClusterOptions())
+  }) 
+  
+output$map_output2 <- renderLeaflet({sliderValues()})
+      
 })
