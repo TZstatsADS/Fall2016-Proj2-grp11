@@ -7,28 +7,6 @@ library(DT)
 library(highcharter)
 library(data.table)
 
-######################################data processing#########################################
-# read the data
-dt = as.data.frame(fread('./NYPD_Felony_2010~2016.csv'))
-
-# count frequencies
-df.Year= dt %>% group_by(Offense,`Occurrence Year`) %>% summarise (n = n()) 
-df.Month= dt %>% group_by(Offense,`Occurrence Month`) %>% summarise (n = n()) 
-df.Day= dt %>% group_by(Offense,`Occurrence Day`) %>% summarise (n = n()) 
-df.Hour= dt %>% group_by(Offense,`Occurrence Hour`) %>% summarise (n = n()) 
-
-
-# crime types
-df.crime= count(dt,Offense)
-
-# List of Vectors
-crimes_vec=df.crime$Offense
-
-year_list=seq(from=2010,to=2015)
-month_list=c('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec')
-day_list=seq(1:31)
-hour_list=seq(from=0,to=23)
-##################################end of data processing########################################
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
@@ -105,23 +83,24 @@ shinyServer(function(input, output, session) {
 
     
     #--------Celia----------------------
-    dt = as.data.frame(fread('./data/NYPD_Felony_2010~2016.csv'))
-    df.Year= dt %>% group_by(Offense,`Occurrence Year`) %>% dplyr::summarise (n = n()) 
-    df.Month= dt %>% group_by(Offense,`Occurrence Month`) %>% dplyr::summarise (n = n()) 
-    df.Day= dt %>% group_by(Offense,`Occurrence Day`) %>% dplyr::summarise (n = n()) 
-    df.Week= dt %>% group_by(Offense,`Day of Week`) %>% dplyr::summarise (n = n())
-    df.Hour= dt %>% group_by(Offense,`Occurrence Hour`) %>% dplyr::summarise (n = n()) 
-    
-    # crime types
-    df.crime= dplyr::count(dt,Offense)
-    
-    # List of Vectors
-    crimes_vec=df.crime$Offense
-    
-    year_list=seq(from=2010,to=2015)
-    month_list=c('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec')
-    day_list=seq(1:31)
-    hour_list=seq(from=0,to=23)
+    dt = as.data.frame(fread('./NYPD_Felony_2010~2016.csv'))
+   # count frequencies
+df.Year= dt %>% group_by(Offense,`Occurrence Year`) %>% summarise (n = n()) 
+df.Month= dt %>% group_by(Offense,`Occurrence Month`) %>% summarise (n = n()) 
+df.Day= dt %>% group_by(Offense,`Occurrence Day`) %>% summarise (n = n()) 
+df.Hour= dt %>% group_by(Offense,`Occurrence Hour`) %>% summarise (n = n()) 
+
+
+# crime types
+df.crime= count(dt,Offense)
+
+# List of Vectors
+crimes_vec=df.crime$Offense
+
+year_list=seq(from=2010,to=2015)
+month_list=c('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec')
+day_list=seq(1:31)
+hour_list=seq(from=0,to=23)
     
     
     
