@@ -4,6 +4,8 @@ library(leaflet)
 library(RColorBrewer)
 library(ggplot2)
 library(DT)
+library(plotly)
+library(highcharter)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
@@ -56,7 +58,7 @@ shinyServer(function(input, output, session) {
     observe({
       code<-geocode(my_address())
       dt_sub<-dt[,c('lng','lat')]
-      newdata<- subset(dt,distHaversine(code,dt_sub) <= input$range)
+      newdata<- subset(dt,distHaversine(code,dt_sub) <= input$range )
       output$table <- DT::renderDataTable(newdata[,c('Date','Day of Week','Occurrence Hour','Offense')])
 
       leafletProxy("map_output") %>%
@@ -77,14 +79,36 @@ shinyServer(function(input, output, session) {
     output$map_output2 <- renderLeaflet({sliderValues()})
   
     
-#-----------------------Celia-------------------
+
+    
+    #--------Celia----------------------
+    dt = as.data.frame(fread('./data/NYPD_Felony_2010~2016.csv'))
+    df.Year= dt %>% group_by(Offense,`Occurrence Year`) %>% dplyr::summarise (n = n()) 
+    df.Month= dt %>% group_by(Offense,`Occurrence Month`) %>% dplyr::summarise (n = n()) 
+    df.Day= dt %>% group_by(Offense,`Occurrence Day`) %>% dplyr::summarise (n = n()) 
+    df.Week= dt %>% group_by(Offense,`Day of Week`) %>% dplyr::summarise (n = n())
+    df.Hour= dt %>% group_by(Offense,`Occurrence Hour`) %>% dplyr::summarise (n = n()) 
+    
+    # crime types
+    df.crime= dplyr::count(dt,Offense)
+    
+    # List of Vectors
+    crimes_vec=df.crime$Offense
+    
+    year_list=seq(from=2010,to=2015)
+    month_list=c('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec')
+    day_list=seq(1:31)
+    hour_list=seq(from=0,to=23)
+    
+    
+    
     #########################by Time###############################
     output$timeplot = renderPlotly({
       i= as.numeric(input$timetype)
       j = i - 1
       number_vec = rbind(c(1,12),c(1,31),c(2010,2015),c(0,23))
       time_vec=c("Months Vs Number of Crimes","Days Vs Number of Crimes","Years Vs Number of Crimes","Hours Vs Number of Crimes")
-      df.time=dt %>% group_by(Offense,dt[,i]) %>% summarise (n = n())
+      df.time=dt %>% group_by(Offense,dt[,i]) %>% dplyr::summarise (n = n())
       plot_ly(x = seq(from=number_vec[j,1],to=number_vec[j,2])) %>% layout(title = time_vec[j],width=1200,height=600) %>% 
         add_lines(y = df.time[df.time$Offense=="BURGLARY",]$n, name = "BURGLARY") %>%
         add_lines(y = df.time[df.time$Offense=="FELONY ASSAULT",]$n, name = "FELONY ASSAULT") %>%
@@ -150,34 +174,26 @@ shinyServer(function(input, output, session) {
       datatable(df_prec.order[m:n,])
     })
     
+    
     #########################by crime types#############################
     output$typeplot = renderHighchart({
       # crime types
-      df.crime= dplyr::count(dt,Offense)
-      df.crime.2010_2015=dt %>% group_by(`Borough`,Offense) %>% summarise (n = n())
+      df.crime= dt %>% group_by(Offense) %>% dplyr::summarise(n = n())
+      df.crime.2010_2015=dt %>% group_by(`Borough`,Offense) %>% dplyr::summarise(n = n())
+      df.crime.borough=dt %>% group_by(`Occurrence Year`,Offense) %>% dplyr::summarise(n = n())
+      df.crime.boryear=dt %>% group_by(`Occurrence Year`,`Borough`,Offense) %>% dplyr::summarise(n = n())
+      df.crime.2010_2015.bor = df.crime.2010_2015[which(df.crime.2010_2015$Borough == input$typeborough),]
+      df.crime.borough.2010_2015 = df.crime.borough[which(df.crime.borough$`Occurrence Year`==input$year),]
+      df.crime.boryear.plot=df.crime.boryear[which(df.crime.boryear$`Occurrence Year`== input$year &  df.crime.boryear$Borough==input$typeborough),]
       
-      if(input$year=="2010-2015" & input$typeborough=="ALL BOROUGHS"){
-        highchart() %>% hc_chart(type = "pie") %>%
-          hc_add_series(name="How many of this felony occurred?",
-                        data = list_parse(data.frame(name = df.crime$Offense, y = df.crime$n)))}
-      if(input$year=="2010-2015"){
-        highchart() %>% hc_chart(type = "pie") %>%
-          hc_add_series(name="How many of this felony occurred?",
-                        df.crime.2010_2015=dt %>% group_by(`Borough`,Offense) %>% summarise (n = n()),
-                        df.crime.2010_2015.BOR = df.crime.2010_2015[which(df.crime.2010_2015$Borough ==input$typeborough),],
-                        data = list_parse(data.frame(name=df.crime.2010_2015.BOR$Offense, y = df.crime.2010_2015.BOR$n)))}
       if(input$typeborough=="ALL BOROUGHS"){
-        highchart() %>% hc_chart(type = "pie") %>%
-          hc_add_series(name="How many of this felony occurred?",
-                        df.crime.borough=dt %>% group_by(`Occurrence Year`,Offense) %>% summarise (n = n()),
-                        df.crime.borough.2010_2015 = df.crime.borough[which(df.crime.borough$`Occurrence Year`==input$year),],
-                        data = list_parse(data.frame(name=df.crime.borough.2010_2015$Offense, y=df.crime.borough.2010_2015$n)))}
-      else{highchart() %>% hc_chart(type = "pie") %>% hc_add_series(name="How many of this felony occurred?",
-                                                                    df.crime.boryear=dt %>% group_by(`Occurrence Year`,`Borough`,Offense) %>% summarise (n = n()),
-                                                                    df.crime.boryear.plot=df.crime.borough[which(df.crime.boryear$`Occurrence Year`==input$year & df.crime.boryear$Borough==input$typeborough),],
-                                                                    data = list_parse(data.frame(name=df.crime.boryear.plot$Offense, y=df.crime.boryear.plot$n)))}
+        highchart() %>% hc_chart(type = "pie") %>% 
+          hc_add_series(data = list_parse(data.frame(name=df.crime.borough.2010_2015$Offense, y=df.crime.borough.2010_2015$n)))}
+      else{
+        highchart() %>% hc_chart(type = "pie") %>% 
+          hc_add_series(data = list_parse(data.frame(name=df.crime.boryear.plot$Offense, y=df.crime.boryear.plot$n)))}
+      
+      
     })
-    
-  
 })
 
