@@ -4,9 +4,8 @@ library(leaflet)
 library(RColorBrewer)
 library(ggplot2)
 library(DT)
+library(plotly)
 library(highcharter)
-library(data.table)
-library(ggmap)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
@@ -53,14 +52,29 @@ shinyServer(function(input, output, session) {
     
     
     #---------------hayoung-----------
+    
     my_address <- eventReactive(input$go,{input$address})
     output$map_output <- renderLeaflet({map})
     
     observe({
+      dt = cbind(dt, split_location(dt$`Location 1`))
+      dt[,'lat']<-as.numeric(dt[,'lat'])
+      dt[,'lng']<-as.numeric(dt[,'lng'])
+      dt = subset(dt, `Occurrence Year` >= 2015 )
+      pu<-paste(sep="<br/>",dt$Offense,dt$Date)
+      map<-leaflet(dt) %>% addTiles() %>%
+        addMarkers(dt$lng, dt$lat, popup = pu,clusterOptions=markerClusterOptions())
+      
+      
+      sub1<-subset(dt,(lng>-73.97)&(lng<-73.94))
+      sub2<-subset(sub1,(lat>40.80)&(lat<40.81))
+      
+      
+      
       code<-geocode(my_address())
       dt_sub<-dt[,c('lng','lat')]
       newdata<- subset(dt,distHaversine(code,dt_sub) <= input$range )
-      output$table <- DT::renderDataTable(newdata[,c('Date','Day of Week','Occurrence Hour','Offense')])
+      output$table <- DT::renderDataTable(newdata[,c('Day of Week','Occurrence Hour','Offense')])
 
       leafletProxy("map_output") %>%
         clearPopups()%>%
@@ -83,24 +97,23 @@ shinyServer(function(input, output, session) {
 
     
     #--------Celia----------------------
-    dt = as.data.frame(fread('./NYPD_Felony_2010~2016.csv'))
-   # count frequencies
-df.Year= dt %>% group_by(Offense,`Occurrence Year`) %>% summarise (n = n()) 
-df.Month= dt %>% group_by(Offense,`Occurrence Month`) %>% summarise (n = n()) 
-df.Day= dt %>% group_by(Offense,`Occurrence Day`) %>% summarise (n = n()) 
-df.Hour= dt %>% group_by(Offense,`Occurrence Hour`) %>% summarise (n = n()) 
-
-
-# crime types
-df.crime= count(dt,Offense)
-
-# List of Vectors
-crimes_vec=df.crime$Offense
-
-year_list=seq(from=2010,to=2015)
-month_list=c('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec')
-day_list=seq(1:31)
-hour_list=seq(from=0,to=23)
+    dt = as.data.frame(fread('./data/NYPD_Felony_2010~2016.csv'))
+    df.Year= dt %>% group_by(Offense,`Occurrence Year`) %>% dplyr::summarise (n = n()) 
+    df.Month= dt %>% group_by(Offense,`Occurrence Month`) %>% dplyr::summarise (n = n()) 
+    df.Day= dt %>% group_by(Offense,`Occurrence Day`) %>% dplyr::summarise (n = n()) 
+    df.Week= dt %>% group_by(Offense,`Day of Week`) %>% dplyr::summarise (n = n())
+    df.Hour= dt %>% group_by(Offense,`Occurrence Hour`) %>% dplyr::summarise (n = n()) 
+    
+    # crime types
+    df.crime= dplyr::count(dt,Offense)
+    
+    # List of Vectors
+    crimes_vec=df.crime$Offense
+    
+    year_list=seq(from=2010,to=2015)
+    month_list=c('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec')
+    day_list=seq(1:31)
+    hour_list=seq(from=0,to=23)
     
     
     
