@@ -5,10 +5,11 @@ library(magrittr)
 library(leaflet)
 library(ggmap)
 library(geosphere)
+library(highcharter)
 
 setwd('/Users/Max/GitHub/Fall2016-Proj2-grp11/')
 dt = as.data.frame(fread('./data/NYPD_Felony_2010~2016.csv'))
-
+head(dt)
 #checking NA value
 #colSums(is.na(dt))
   
@@ -71,5 +72,24 @@ pu<-paste(sep="<br/>",dt$Offense,dt$'Occurrence Date')
 map<-leaflet(dt) %>% addTiles() %>%
   addMarkers(dt$lng, dt$lat, popup = pu,clusterOptions=markerClusterOptions())
 
-sub1<-subset(dt,(lon>-73.97)&(lon<-73.94))
+sub1<-subset(dt,(lng>-73.97)&(lng<-73.94))
 sub2<-subset(sub1,(lat>40.80)&(lat<40.81))
+
+#--------Celia----------------------
+df.Year= dt %>% group_by(Offense,`Occurrence Year`) %>% dplyr::summarise (n = n()) 
+df.Month= dt %>% group_by(Offense,`Occurrence Month`) %>% dplyr::summarise (n = n()) 
+df.Day= dt %>% group_by(Offense,`Occurrence Day`) %>% dplyr::summarise (n = n()) 
+df.Week= dt %>% group_by(Offense,`Day of Week`) %>% dplyr::summarise (n = n())
+df.Hour= dt %>% group_by(Offense,`Occurrence Hour`) %>% dplyr::summarise (n = n()) 
+
+# crime types
+df.crime= dplyr::count(dt,Offense)
+
+# List of Vectors
+crimes_vec=df.crime$Offense
+
+year_list=seq(from=2010,to=2015)
+month_list=c('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec')
+day_list=seq(1:31)
+hour_list=seq(from=0,to=23)
+
