@@ -6,18 +6,6 @@ library(plotly)
 #UI part
 navbarPage(title = "NYPD 7 Major Felonies", theme = 'bootstrap.css',
   
-           tabPanel(title = 'Columbia Univ. Area',
-                    fluidRow(
-                      column(width = 9,
-                             box(width = NULL, solidHeader = TRUE,leafletOutput("map_output2", height = 500)
-                             )
-                      ),
-                      column(width = 3,
-                             box(width = NULL, status = "warning",
-                                 sliderInput("test", "Crime count by hour:",
-                                             min = 0, max = 23, value = 0, step = 1,
-                                             sep = ",", animate=TRUE)
-                             )))),
   
   tabPanel(title = 'Neighborhood Crime',
                     fluidRow(
@@ -160,7 +148,20 @@ navbarPage(title = "NYPD 7 Major Felonies", theme = 'bootstrap.css',
                                       br(),br(),br(),br(),br(),br(),
                                       highchartOutput ("typeplot")
                                     )))),
-
+  
+  tabPanel(title = 'Special Case',
+           fluidRow(
+             column(width = 9,
+                    box(width = NULL, solidHeader = TRUE,leafletOutput("map_output2", height = 500)
+                    )
+             ),
+             column(width = 3,
+                    box(width = NULL, status = "warning",
+                        sliderInput("test", "Crime count by hour:",
+                                    min = 0, max = 23, value = 0, step = 1,
+                                    sep = ",", animate=TRUE)
+                    )))),
+  
   ###############################################################                 
   tabPanel("About Us",
            titlePanel("More on the App and Us"),
