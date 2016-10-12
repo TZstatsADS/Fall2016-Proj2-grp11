@@ -93,8 +93,8 @@ navbarPage(title = "NYPD 7 Major Felonies", theme = 'bootstrap.css',
                                     sidebarPanel(
                                       helpText("Select a type of time to illustrate how the number of 
                                                feloy incidents change with time."),
-                                      radioButtons("timetype","Choose A Type of Time to display",
-                                                   choices = list("Year"=4,"Month"=2,"Day"=3,"Hour"=5),
+                                      radioButtons("timetypes","Choose A Type of Time to display",
+                                                   choices = c("Year"=4,"Month"=2,"Day"=3,"Hour"=5),
                                                    selected = 4)),
                                     
                                     # main panel 
@@ -102,7 +102,7 @@ navbarPage(title = "NYPD 7 Major Felonies", theme = 'bootstrap.css',
                                       h1("NYPD 7 Major Felony Incidents",align = "center"),
                                       h2("A Closer Look: Classified by Time",align = "center"),
                                       br(),br(),br(),br(),br(),br(),
-                                      plotlyOutput("timeplot")))),
+                                      highchartOutput("time_plot")))),
              ###############################################################      
              tabPanel("Felonies by Locations",sidebarLayout(position="right",                            
                                                             sidebarPanel(
