@@ -20,10 +20,6 @@ All the team members have pledged that they all put effort and work for this pro
 
 ![screenshot](doc/Screen Shot 2016-10-12 at 11.47.16 AM.png)
 
-The **learning goals** for this project is 
-- business intelligence for data science
-- systems development/design life cycle
-- shiny app/shiny server
 	
 **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
 
