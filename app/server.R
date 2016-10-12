@@ -4,7 +4,6 @@ library(leaflet)
 library(RColorBrewer)
 library(ggplot2)
 library(DT)
-library(plotly)
 library(highcharter)
 
 # Define server logic required to draw a histogram
@@ -103,21 +102,23 @@ shinyServer(function(input, output, session) {
     
     
     #########################by Time###############################
-    output$timeplot = renderPlotly({
-      i= as.numeric(input$timetype)
+    output$time_plot = renderHighchart({
+      i= as.numeric(input$timetypes)
       j = i - 1
       number_vec = rbind(c(1,12),c(1,31),c(2010,2015),c(0,23))
       time_vec=c("Months Vs Number of Crimes","Days Vs Number of Crimes","Years Vs Number of Crimes","Hours Vs Number of Crimes")
       df.time=dt %>% group_by(Offense,dt[,i]) %>% dplyr::summarise (n = n())
-      plot_ly(x = seq(from=number_vec[j,1],to=number_vec[j,2])) %>% layout(title = time_vec[j],width=1200,height=600) %>% 
-        add_lines(y = df.time[df.time$Offense=="BURGLARY",]$n, name = "BURGLARY") %>%
-        add_lines(y = df.time[df.time$Offense=="FELONY ASSAULT",]$n, name = "FELONY ASSAULT") %>%
-        add_lines(y = df.time[df.time$Offense=="GRAND LARCENY",]$n, name = "GRAND LARCENY") %>%
-        add_lines(y = df.time[df.time$Offense=="GRAND LARCENY OF MOTOR VEHICLE",]$n, name = "GRAND LARCENY OF MOTOR VEHICLE") %>%
-        add_lines(y = df.time[df.time$Offense=="MURDER & NON-NEGL. MANSLAUGHTE",]$n, name = "MURDER & NON-NEGL. MANSLAUGHTE") %>%
-        add_lines(y = df.time[df.time$Offense=="RAPE",]$n, name = "RAPE") %>% 
-        add_lines(y = df.time[df.time$Offense=="ROBBERY",]$n, name = "ROBBERY")
+      x = seq(from=number_vec[j,1],to=number_vec[j,2])
+      highchart() %>% hc_chart(type = "line") %>% hc_chart(width=1000,height=600) %>% hc_title(text=time_vec[j]) %>%
+        hc_add_series(name="BURGLARY",data = list_parse(data.frame(name=x, y=df.time[df.time$Offense=="BURGLARY",]$n))) %>% 
+        hc_add_series(name="FELONY ASSAULT",data = list_parse(data.frame(name=x, y=df.time[df.time$Offense=="FELONY ASSAULT",]$n))) %>%
+        hc_add_series(name="GRAND LARCENY",data = list_parse(data.frame(name=x, y=df.time[df.time$Offense=="GRAND LARCENY",]$n))) %>% 
+        hc_add_series(name="GRAND LARCENY OF MOTOR VEHICLE",data = list_parse(data.frame(name=x, y=df.time[df.time$Offense=="GRAND LARCENY OF MOTOR VEHICLE",]$n))) %>% 
+        hc_add_series(name="MURDER & NON-NEGL. MANSLAUGHTE",data = list_parse(data.frame(name=x, y=df.time[df.time$Offense=="MURDER & NON-NEGL. MANSLAUGHTE",]$n))) %>% 
+        hc_add_series(name="RAPE",data = list_parse(data.frame(name=x, y=df.time[df.time$Offense=="RAPE",]$n))) %>% 
+        hc_add_series(name="ROBBERY",data = list_parse(data.frame(name=x, y=df.time[df.time$Offense=="ROBBERY",]$n)))
     })
+    
     #########################by locations###############################
     output$borplot = renderHighchart({
       
