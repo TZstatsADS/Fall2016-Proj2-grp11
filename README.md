@@ -38,7 +38,7 @@ All 3 team members have pledged that they all put effort and work for this proje
 ![screenshot](doc/Screen Shot 2016-10-12 at 11.47.16 AM.png)
 
 	
-**Contribution statement**: CH, HK and ZL all contributed analysis ideas for this work. CH is responsible for the in-depth analysis, app layout(e.g the app structure and page layout) and the interactive plots of felony data. HK is responsible for the interactive map based on user specified location as well as the hourly distribution of felony crimes around Columbia campus. ZL is responsible for the basic UI structure and interactive map with user input on specific time period. All team members approve our work presented in this GitHub repository including this contributions statement.
+**Contribution statement**: CH, HK and ZL all contributed analysis ideas for this work. CH is responsible for the in-depth analysis, app layout(e.g the app structure and page layout), github descriptions(including project and folder descriptions) and all the interactive plots of felony data. HK is responsible for the interactive map based on user specified location as well as the hourly distribution of felony crimes around Columbia campus. ZL is responsible for the basic UI structure and interactive map with user input on specific time period. All team members approve our work presented in this GitHub repository including this contributions statement.
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
